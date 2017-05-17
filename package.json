@@ -1,10 +1,10 @@
 {
-  "name": "react-paginator",
+  "name": "react-paginated",
   "version": "0.0.2",
   "description": "React Pagination",
   "main": "dist/index.js",
   "repository": {
-    "url": "https://github.com/bradwestfall/react-paginator.git"
+    "url": "https://github.com/bradwestfall/react-paginated.git"
   },
   "keywords": [
     "react",

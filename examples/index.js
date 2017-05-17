@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
 import classnames from 'classnames'
-import { Paginate, PaginateResults, PaginateNoResults, PaginateNav, PaginateFooter, PaginateLoading } from 'src'
+import { Paginate, PaginateHeader, PaginateResults, PaginateNoResults, PaginateNav, PaginateFooter, PaginateLoading } from 'src'
 
 const getResults = page => {
   return axios.get('/results?page=' + page)
@@ -18,11 +18,14 @@ const App = () => {
   return (
     <Paginate
         api={getResults}
-        navUrl="?page=:page"
         resultsPerPage={2}
         page={page}>
 
-      <PaginateResults>
+      <PaginateHeader>
+        <h3>Results:</h3>
+      </PaginateHeader>
+
+      <PaginateResults className="foo">
         {(lib, refreshResults) => (
           <div key={lib.id}>{lib.name}</div>
         )}
@@ -37,13 +40,11 @@ const App = () => {
       </PaginateLoading>
 
       <PaginateFooter>
-        <footer>
-          <PaginateNav>
-            {(page, active) => {
-              return <a key={page} className={classnames('page', { active })} href={'?page=' + page}>{page}</a>
-            }}
-          </PaginateNav>
-        </footer>
+        <PaginateNav>
+          {(page, active) => {
+            return <a key={page} className={classnames('page', { active })} href={'?page=' + page}>{page}</a>
+          }}
+        </PaginateNav>
       </PaginateFooter>
     </Paginate>
   )

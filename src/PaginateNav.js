@@ -6,7 +6,7 @@ class PaginateNav extends React.Component {
 
   render() {
     return (
-      <nav className={classnames('paginate-nav', this.props.className)}>
+      <nav className={classnames('react-paginated-nav', this.props.className)}>
         {this.renderPages()}
       </nav>
     )
@@ -14,12 +14,12 @@ class PaginateNav extends React.Component {
 
   renderPages() {
     const { totalResults, resultsPerPage, page } = this.props
-    if (isNaN(parseInt(totalResults)) && isNaN(parseInt(resultsPerPage))) return null
     const totalPages = Math.ceil(totalResults / resultsPerPage)
     const links = []
     if (totalPages === 1) return null
     for (var i = 1; i <= totalPages; i++) {
       let active = i === page
+      // props.children is always a function
       links.push(this.props.children(i, active))
     }
     return links

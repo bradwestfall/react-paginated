@@ -1,3 +1,3 @@
-# react-paginator
+# react-paginated
 
 Docs coming soon
