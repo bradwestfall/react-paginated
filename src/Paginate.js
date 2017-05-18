@@ -43,17 +43,18 @@ class Paginate extends React.Component {
   fetchResults() {
     this.props.api(this.state.page, this.state.resultsPerPage)
       .then(response => {
-        if (!_.isPlainObject(response)) {
-          console.error('API response for `react-paginated` is not an object . Received:', response)
-          this.setState({ results: [], totalResults: 0 })
-        } else {
-          const { results, totalResults } = response
-          if (!Array.isArray(results) || !Number.isInteger(parseInt(totalResults))) {
-            console.error('API response for `react-paginated` is malformed. Received:', response)
-            return
+        let results = []
+        let totalResults = 0
+
+        // Only accept results if is formatted correctly
+        if (_.isPlainObject(response)) {
+          if (Array.isArray(response.results) && response.results.length > 0) {
+            results = response.results
+            totalResults = Number.isInteger(parseInt(response.totalResults)) ? response.totalResults : results.length
           }
-          this.setState({ results, totalResults: parseInt(totalResults) })
         }
+
+        this.setState({ results, totalResults: parseInt(totalResults) })
       }).catch(err => { throw new Error(err) })
   }
 
