@@ -4,12 +4,29 @@ import axios from 'axios'
 import classnames from 'classnames'
 import { Paginate, PaginateHeader, PaginateResults, PaginateNoResults, PaginateNav, PaginateFooter, PaginateLoading } from 'src'
 
+// Your function returning a promise
 const getResults = page => {
   return axios.get('/results?page=' + page)
     .then(res => res.data)
     .catch(err => console.err(err))
 }
 
+// Optionable Wrapper for Results
+const TableWrap = props => (
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {props.children}
+    </tbody>
+  </table>
+)
+
+// Example App
 const App = () => {
 
   const pageQuery = window.location.search.substr(1).split('&').filter(q => /^page=/.test(q))[0]
@@ -17,17 +34,20 @@ const App = () => {
 
   return (
     <Paginate
-        api={getResults}
-        resultsPerPage={2}
-        page={page}>
+      api={getResults}
+      resultsPerPage={2}
+      page={page}>
 
       <PaginateHeader>
         <h3>Results:</h3>
       </PaginateHeader>
 
-      <PaginateResults className="foo">
+      <PaginateResults wrap={TableWrap}>
         {(lib, refreshResults) => (
-          <div key={lib.id}>{lib.name}</div>
+          <tr key={lib.id}>
+            <td>{lib.id}</td>
+            <td>{lib.name}</td>
+          </tr>
         )}
       </PaginateResults>
 
