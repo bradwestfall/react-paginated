@@ -5,11 +5,10 @@ import classnames from 'classnames'
 const PaginateResults = props => {
   const { results, refreshResults, wrap: Wrap } = props
   const children = results.map(item => props.children(item, refreshResults))
-  const wrapClassName = classnames('react-paginated-results', props.className)
 
   return Wrap
-    ? <Wrap className={wrapClassName} refreshResults={refreshResults}>{children}</Wrap>
-    : <div className={wrapClassName}>{children}</div>
+    ? <Wrap refreshResults={refreshResults} {...props}>{children}</Wrap>
+    : <div className={classnames('react-paginated-results', props.className)}>{children}</div>
 }
 
 PaginateResults.propTypes = {
