@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import classnames from 'classnames'
-import { normalizeInput } from './helpers'
+import { parseNumeric } from './helpers'
 
 // Components for reference against `child.type`
 import PaginateHeader from './PaginateHeader'
@@ -17,50 +17,13 @@ const apiList = [PaginateHeader, PaginateResults, PaginateNoResults, PaginateLoa
 
 class Paginate extends React.Component {
 
-  constructor() {
-    super()
-    this.state = {
-      totalResults: null,
-      results: null,
-      page: 1,
-      resultsPerPage: defaultResultsPerPage
-    }
-    this.fetchResults = this.fetchResults.bind(this)
-  }
-
-  componentDidMount() {
-    const { page, resultsPerPage } = normalizeInput(this.props.page, this.props.resultsPerPage)
-    this.setState({ page, resultsPerPage }, this.fetchResults)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { page, resultsPerPage } = normalizeInput(nextProps.page, nextProps.resultsPerPage)
-    if (page !== this.state.page || resultsPerPage !== this.state.resultsPerPage) {
-      this.setState({ page, resultsPerPage, results: null, totalResults: null }, this.fetchResults)
-    }
-  }
-
-  fetchResults() {
-    this.props.api(this.state.page, this.state.resultsPerPage)
-      .then(response => {
-        let results = []
-        let totalResults = 0
-
-        // Only accept results if is formatted correctly
-        if (_.isPlainObject(response)) {
-          if (Array.isArray(response.results) && response.results.length > 0) {
-            results = response.results
-            totalResults = Number.isInteger(parseInt(response.totalResults)) ? response.totalResults : results.length
-          }
-        }
-
-        this.setState({ results, totalResults: parseInt(totalResults) })
-      }).catch(err => { throw new Error(err) })
-  }
-
   iterateChildren(children, seek) {
-    return React.Children.map(children, child => {
+    const { results } = this.props
+    const totalResults = parseNumeric(this.props.totalResults)
+    const page = parseNumeric(this.props.page)
+    const resultsPerPage = parseNumeric(this.props.resultsPerPage)
 
+    return React.Children.map(children, child => {
       // Text nodes
       if (!React.isValidElement(child)) return child
 
@@ -78,41 +41,36 @@ class Paginate extends React.Component {
 
       // Only pass our special props into our API components, not DOM nodes
       if (_.includes(apiList, child.type)) {
-        props = Object.assign({}, props, {...this.state, refreshResults: this.fetchResults})
+        props = Object.assign({}, props, { totalResults, results, page, resultsPerPage })
       }
 
       return React.cloneElement(child, props)
-
     })
   }
 
   render() {
+    const { results, children, className } = this.props
     let clonedChildren
 
     // Async call for results has returned (even if with no results)
-    if (Array.isArray(this.state.results)) {
-      const seek = this.state.results.length > 0 ? [PaginateHeader, PaginateResults, PaginateFooter, PaginateNav] : [PaginateNoResults]
-      clonedChildren = this.iterateChildren(this.props.children, seek)
+    if (Array.isArray(results)) {
+      const seek = results.length > 0 ? [PaginateHeader, PaginateResults, PaginateFooter, PaginateNav] : [PaginateNoResults]
+      clonedChildren = this.iterateChildren(children, seek)
 
     // If results haven't returned, return the loading component
     } else {
-      clonedChildren = React.Children.map(this.props.children, child => {
+      clonedChildren = React.Children.map(children, child => {
         return child.type === PaginateLoading ? child.props.children : null
       })
     }
 
-    return <div className={classnames('react-paginated', this.props.className)}>{clonedChildren || null}</div>
+    return <div className={classnames('react-paginated', className)}>{clonedChildren || null}</div>
   }
 }
 
 Paginate.defaultProps = {
   page: 1,
   resultsPerPage: defaultResultsPerPage
-}
-
-Paginate.propTypes = {
-  api: PropTypes.func.isRequired,
-  className: PropTypes.string
 }
 
 export default Paginate

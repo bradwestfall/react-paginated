@@ -18,11 +18,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/results', (req, res) => {
-  res.json(getFakeResults(req.query.page))
+  const { page, resultsPerPage } = req.query
+  res.json(getFakeResults(page, resultsPerPage))
 })
 
 // Fake Database
-function getFakeResults(page) {
+function getFakeResults(page, resultsPerPage) {
+
+  // Since it's a fake database, resultsPerPage is insignificant to the code
 
   const database = [
     { id: 1, name:'Brad' },
