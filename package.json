@@ -13,7 +13,7 @@
   "author": "Brad Westfall",
   "license": "MIT",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "npm run clean && cross-env BABEL_ENV=default babel src --out-dir dist",
     "clean": "rimraf dist/*",
     "example": "node examples/server.js"
