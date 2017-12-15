@@ -1,6 +1,6 @@
 {
   "name": "react-paginated",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "React Pagination",
   "main": "dist/index.js",
   "repository": {
