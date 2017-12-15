@@ -1,40 +1,23 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 
-class PaginateNav extends React.Component {
-
-  render() {
-    return (
-      <nav className={classnames('react-paginated-nav', this.props.className)}>
-        {this.renderPages()}
-      </nav>
-    )
+const PaginateNav = ({ children, totalResults, resultsPerPage, page }) => {
+  const totalPages = Math.ceil(totalResults / resultsPerPage)
+  const links = []
+  if (totalPages === 1) return null
+  for (var i = 1; i <= totalPages; i++) {
+    const active = i === page
+    links.push(children(i, active))
   }
 
-  renderPages() {
-    const { totalResults, resultsPerPage, page } = this.props
-    const totalPages = Math.ceil(totalResults / resultsPerPage)
-    const links = []
-    if (totalPages === 1) return null
-    for (var i = 1; i <= totalPages; i++) {
-      let active = i === page
-      // props.children is always a function
-      links.push(this.props.children(i, active))
-    }
-    return links
-  }
-
+  return <Fragment>{links}</Fragment>
 }
 
 PaginateNav.propTypes = {
   children: PropTypes.func.isRequired,
   totalResults: PropTypes.number,
   resultsPerPage: PropTypes.number,
-  page: PropTypes.number,
-  navUrl: PropTypes.string,
-  pageClass: PropTypes.string,
-  activePageClass: PropTypes.string
+  page: PropTypes.number
 }
 
 export default PaginateNav

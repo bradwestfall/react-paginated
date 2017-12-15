@@ -1,13 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
+import React, { Fragment } from 'react'
 
-const PaginateFooter = props => (
-  <footer className={classnames('react-paginated-footer', props.className)}>{props.children}</footer>
+const PaginateFooter = ({ children }) => (
+  <Fragment>{children}</Fragment>
 )
 
-PaginateFooter.propTypes = {
-  className: PropTypes.string
-}
-
 export default PaginateFooter
+

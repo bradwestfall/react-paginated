@@ -3,30 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import queryString from 'query-string'
 import classnames from 'classnames'
-import { Paginate, PaginateHeader, PaginateResults, PaginateNoResults, PaginateNav, PaginateFooter, PaginateLoading } from 'src'
-
-// Your function returning a promise
-const getResults = (page, resultsPerPage) => {
-  const query = queryString.stringify({ page, resultsPerPage })
-  return axios.get(`/results?${query}`)
-    .then(res => res.data)
-    .catch(err => console.err(err))
-}
-
-// Optionable Wrapper for Results
-const TableWrap = props => (
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      {props.children}
-    </tbody>
-  </table>
-)
+import { Paginate, PaginateHeader, PaginateResultsWrap, PaginateResults, PaginateNoResults, PaginateNav, PaginateFooter, PaginateLoading } from 'src'
 
 // Example App
 class App extends React.Component {
@@ -54,13 +31,17 @@ class App extends React.Component {
 
   fetchResults() {
     const page = queryString.parse(window.location.search).page || 1
-    const resultsPerPage = queryString.parse(window.location.search).resultsPerPage || 2
+    const resultsPerPage = queryString.parse(window.location.search).resultsPerPage || 3
 
-    getResults(page, resultsPerPage)
-      .then(response => {
-        const { totalResults, results } = response
+    const query = queryString.stringify({ page })
+    return axios.get(`https://reqres.in/api/users?${query}`)
+      .then(res => res.data)
+      .then(res => {
+        const { total: totalResults, data: results } = res
         this.setState({ totalResults, results, page, resultsPerPage })
       })
+      .catch(err => console.err(err))
+
   }
 
   render() {
@@ -73,14 +54,26 @@ class App extends React.Component {
           <h3>Results:</h3>
         </PaginateHeader>
 
-        <PaginateResults wrap={TableWrap}>
-          {(lib, refreshResults) => (
-            <tr key={lib.id}>
-              <td>{lib.id}</td>
-              <td>{lib.name}</td>
-            </tr>
-          )}
-        </PaginateResults>
+        <PaginateResultsWrap>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <PaginateResults>
+                {results => (
+                  <tr key={results.id}>
+                    <td>{results.id}</td>
+                    <td>{results.first_name}</td>
+                  </tr>
+                )}
+              </PaginateResults>
+            </tbody>
+          </table>
+        </PaginateResultsWrap>
 
         <PaginateNoResults>
           No Results

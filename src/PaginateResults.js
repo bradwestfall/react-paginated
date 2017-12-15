@@ -1,20 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 
-const PaginateResults = props => {
-  const { wrap: Wrap, ...rest } = props
-  const children = rest.results.map(item => props.children(item))
-
-  return Wrap
-    ? <Wrap {...rest}>{children}</Wrap>
-    : <div className={classnames('react-paginated-results', props.className)}>{children}</div>
+const PaginateResults = ({ results, children }) => {
+  children = results.map(item => children(item))
+  return <Fragment>{children}</Fragment>
 }
 
 PaginateResults.propTypes = {
   children: PropTypes.func.isRequired,
-  results: PropTypes.array,
-  className: PropTypes.string
+  results: PropTypes.array
 }
 
 export default PaginateResults

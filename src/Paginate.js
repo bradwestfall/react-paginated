@@ -7,6 +7,7 @@ import { parseNumeric } from './helpers'
 // Components for reference against `child.type`
 import PaginateHeader from './PaginateHeader'
 import PaginateResults from './PaginateResults'
+import PaginateResultsWrap from './PaginateResultsWrap'
 import PaginateNoResults from './PaginateNoResults'
 import PaginateLoading from './PaginateLoading'
 import PaginateFooter from './PaginateFooter'
@@ -27,7 +28,7 @@ class Paginate extends React.Component {
       // Text nodes
       if (!React.isValidElement(child)) return child
 
-      // if it's apart of our API and not what we seek, then ignore it
+      // If the node is apart of our API but not one of the nodes we seek
       if (_.includes(apiList, child.type) && !_.includes(seek, child.type)) return null
 
       // Start props
