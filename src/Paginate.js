@@ -64,7 +64,7 @@ class Paginate extends React.Component {
       })
     }
 
-    return clondedChildren ? <Fragment>{clonedChildren}</Fragment> : null
+    return clonedChildren ? <Fragment>{clonedChildren}</Fragment> : null
   }
 }
 
