@@ -1,13 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
+import React, { Fragment } from 'react'
 
-const PaginateNoResults = props => (
-  <div className={classnames('react-paginated-no-results', props.className)}>{props.children}</div>
+const PaginateNoResults = ({ children }) => (
+  <Fragment>{children}</Fragment>
 )
-
-PaginateNoResults.propTypes = {
-  className: PropTypes.string
-}
 
 export default PaginateNoResults

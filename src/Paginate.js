@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import classnames from 'classnames'
 import { parseNumeric } from './helpers'
 
 // Components for reference against `child.type`
@@ -65,7 +64,7 @@ class Paginate extends React.Component {
       })
     }
 
-    return <div className={classnames('react-paginated', className)}>{clonedChildren || null}</div>
+    return clondedChildren ? <Fragment>{clonedChildren}</Fragment> : null
   }
 }
 
