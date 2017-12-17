@@ -9,7 +9,7 @@ const PaginateNav = ({ children, totalResults, results, page, resultsPerPage, fr
     const active = i === page
     links.push(children(i, active))
   }
-  return fragment ? <Fragment>{children}</Fragment> : <div {...rest}>{children}</div>
+  return fragment ? <Fragment>{links}</Fragment> : <div {...rest}>{links}</div>
 }
 
 PaginateNav.defaultProps = {

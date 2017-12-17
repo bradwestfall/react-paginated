@@ -47,7 +47,7 @@ class Paginate extends React.Component {
   }
 
   render() {
-    const { results, children, className } = this.props
+    const { children, totalResults, results, page, resultsPerPage, fragment, ...rest } = this.props
     let clonedChildren
 
     // Async call for results has returned (even if with no results)
@@ -62,7 +62,8 @@ class Paginate extends React.Component {
       })
     }
 
-    return clonedChildren ? <Fragment>{clonedChildren}</Fragment> : null
+    if (!clonedChildren) return null
+    return fragment ? <Fragment>{clonedChildren}</Fragment> : <div {...rest}>{clonedChildren}</div>
   }
 }
 

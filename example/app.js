@@ -31,8 +31,6 @@ class HomePage extends React.Component {
     this.fetchResults()
   }
 
-  // Since this example is not an SPA (each page refreshes the page), updating the
-  // results with componentWillReceiveProps is not nessesary.
   componentWillReceiveProps() {
     this.fetchResults()
   }
@@ -49,7 +47,6 @@ class HomePage extends React.Component {
         this.setState({ totalResults, results, page, resultsPerPage })
       })
       .catch(err => console.err(err))
-
   }
 
   render() {
