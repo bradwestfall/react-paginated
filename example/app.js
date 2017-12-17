@@ -88,13 +88,11 @@ class HomePage extends React.Component {
           Loading...
         </PaginateLoading>
 
-        <PaginateFooter>
-          <PaginateNav>
-            {(page, active) => {
-              return <Link key={page} className={classnames('page', { active })} to={'?page=' + page}>{page}</Link>
-            }}
-          </PaginateNav>
-        </PaginateFooter>
+        <PaginateNav>
+          {(page, active) => (
+            <Link key={page} className={classnames('page', { active })} to={'?page=' + page}>{page}</Link>
+          )}
+        </PaginateNav>
       </Paginate>
     )
   }
