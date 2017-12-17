@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { parseNumeric } from './helpers'
 
 // Components for reference against `child.type`
@@ -12,8 +11,7 @@ import PaginateLoading from './PaginateLoading'
 import PaginateFooter from './PaginateFooter'
 import PaginateNav from './PaginateNav'
 
-const defaultResultsPerPage = 10
-const apiList = [PaginateHeader, PaginateResults, PaginateNoResults, PaginateLoading, PaginateFooter, PaginateNav]
+const apiList = [PaginateHeader, PaginateResultsWrap, PaginateResults, PaginateNoResults, PaginateLoading, PaginateFooter, PaginateNav]
 
 class Paginate extends React.Component {
 
@@ -28,7 +26,7 @@ class Paginate extends React.Component {
       if (!React.isValidElement(child)) return child
 
       // If the node is apart of our API but not one of the nodes we seek
-      if (_.includes(apiList, child.type) && !_.includes(seek, child.type)) return null
+      if (apiList.includes(child.type) && !seek.includes(child.type)) return null
 
       // Start props
       let props = {}
@@ -40,7 +38,7 @@ class Paginate extends React.Component {
       }
 
       // Only pass our special props into our API components, not DOM nodes
-      if (_.includes(apiList, child.type)) {
+      if (apiList.includes(child.type)) {
         props = Object.assign({}, props, { totalResults, results, page, resultsPerPage })
       }
 
@@ -54,7 +52,7 @@ class Paginate extends React.Component {
 
     // Async call for results has returned (even if with no results)
     if (Array.isArray(results)) {
-      const seek = results.length > 0 ? [PaginateHeader, PaginateResults, PaginateFooter, PaginateNav] : [PaginateNoResults]
+      const seek = results.length > 0 ? [PaginateHeader, PaginateResultsWrap, PaginateResults, PaginateFooter, PaginateNav] : [PaginateNoResults]
       clonedChildren = this.iterateChildren(children, seek)
 
     // If results haven't returned, return the loading component
@@ -70,7 +68,7 @@ class Paginate extends React.Component {
 
 Paginate.defaultProps = {
   page: 1,
-  resultsPerPage: defaultResultsPerPage
+  resultsPerPage: 10
 }
 
 export default Paginate

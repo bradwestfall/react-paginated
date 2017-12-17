@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example</title>
+  <style>
+    body {
+      font-family: arial;
+    }
+
+    footer {
+      margin-top: 0.5em;
+    }
+
+    a.page {
+      display: inline-block;
+      padding: 0.2em 0.5em;
+      border: 1px solid #ddd;
+      margin-right: 0.2em;
+    }
+
+    a.page.active {
+      border-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <!-- File will only exist in memory for webpack, not really on the filesystem -->
+  <script type="text/javascript" src="dist/bundle.js"></script>
+</body>
+</html>
