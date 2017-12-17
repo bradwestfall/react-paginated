@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const PaginateResults = ({ results, children }) => {
+const PaginateResults = ({ children, totalResults, results, page, resultsPerPage, fragment, ...rest }) => {
   children = results.map(item => children(item))
-  return <Fragment>{children}</Fragment>
+  return fragment ? <Fragment>{children}</Fragment> : <div {...rest}>{children}</div>
+}
+
+PaginateResults.defaultProps = {
+  fragment: false,
+  results: []
 }
 
 PaginateResults.propTypes = {

@@ -38,7 +38,7 @@ class Paginate extends React.Component {
       }
 
       // Only pass our special props into our API components, not DOM nodes
-      if (apiList.includes(child.type)) {
+      if ([PaginateResults, PaginateNav].includes(child.type)) {
         props = Object.assign({}, props, { totalResults, results, page, resultsPerPage })
       }
 

@@ -71,7 +71,7 @@ class HomePage extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <PaginateResults>
+              <PaginateResults fragment>
                 {results => (
                   <tr key={results.id}>
                     <td>{results.id}</td>

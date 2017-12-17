@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const PaginateNav = ({ children, totalResults, resultsPerPage, page }) => {
+const PaginateNav = ({ children, totalResults, results, page, resultsPerPage, fragment, ...rest }) => {
   const totalPages = Math.ceil(totalResults / resultsPerPage)
   const links = []
   if (totalPages === 1) return null
@@ -9,8 +9,11 @@ const PaginateNav = ({ children, totalResults, resultsPerPage, page }) => {
     const active = i === page
     links.push(children(i, active))
   }
+  return fragment ? <Fragment>{children}</Fragment> : <div {...rest}>{children}</div>
+}
 
-  return <Fragment>{links}</Fragment>
+PaginateNav.defaultProps = {
+  fragment: false
 }
 
 PaginateNav.propTypes = {
