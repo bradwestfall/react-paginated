@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
 import { parseNumeric } from './helpers'
 
 // Components for reference against `child.type`
@@ -48,6 +47,7 @@ class Paginate extends React.Component {
 
   render() {
     const { children, totalResults, results, page, resultsPerPage, fragment, ...rest } = this.props
+    if (!page || !resultsPerPage) return null
     let clonedChildren
 
     // Async call for results has returned (even if with no results)
@@ -65,11 +65,6 @@ class Paginate extends React.Component {
     if (!clonedChildren) return null
     return fragment ? <Fragment>{clonedChildren}</Fragment> : <div {...rest}>{clonedChildren}</div>
   }
-}
-
-Paginate.defaultProps = {
-  page: 1,
-  resultsPerPage: 10
 }
 
 export default Paginate
