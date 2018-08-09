@@ -11,7 +11,7 @@ import {
   PaginateResults,
   PaginateNoResults,
   PaginateNav,
-  PaginateFooter, PaginateLoading
+  PaginateLoading
 } from 'src'
 
 class HomePage extends React.Component {
@@ -54,6 +54,10 @@ class HomePage extends React.Component {
 
     return (
       <Paginate totalResults={totalResults} results={results} page={page} resultsPerPage={resultsPerPage}>
+
+        <Foobar className="paginated-nav">
+          {() => null}
+        </Foobar>
 
         <PaginateHeader>
           <h3>Results:</h3>

@@ -30,10 +30,12 @@ class Paginate extends React.Component {
       // Start props
       let props = {}
 
-      // Recursivly clone children if not PaginateResults or PaginateNav - these components
+      // Recursively clone children if not PaginateResults or PaginateNav - these components
       // take functions as their child arguments so should not be iterated
       if (child.type !== PaginateResults && child.type !== PaginateNav) {
-        props.children = this.iterateChildren(child.props.children, seek)
+        props.children = typeof child.props.children === 'function'
+         ? child.props.children
+         : this.iterateChildren(child.props.children, seek)
       }
 
       // Only pass our special props into our API components, not DOM nodes
