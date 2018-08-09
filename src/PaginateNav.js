@@ -21,14 +21,16 @@ const PaginateNav = ({ children, totalResults, page, resultsPerPage, range, frag
 }
 
 PaginateNav.defaultProps = {
-  fragment: false
+  fragment: false,
+  range: 2
 }
 
 PaginateNav.propTypes = {
   children: PropTypes.func.isRequired,
   totalResults: PropTypes.number,
   resultsPerPage: PropTypes.number,
-  page: PropTypes.number
+  page: PropTypes.number,
+  range: PropTypes.number
 }
 
 export default PaginateNav
