@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const PaginateResultsWrap = ({ children, fragment, ...rest }) => (
+// Note that some props are listed just so they don't end up in ...rest
+const PaginateResultsWrap = ({ children, totalResults, page, resultsPerPage, results, fragment, ...rest }) => (
   fragment ? <Fragment>{children}</Fragment> : <div {...rest}>{children}</div>
 )
 

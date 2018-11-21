@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-const PaginateNav = ({ children, totalResults, page, resultsPerPage, range, fragment, ...rest }) => {
+// Note that some props are listed just so they don't end up in ...rest
+const PaginateNav = ({ children, totalResults, page, resultsPerPage, results, range, fragment, ...rest }) => {
   const totalPages = Math.ceil(totalResults / resultsPerPage)
   if (totalPages === 1) return null
   const totalRange = (range * 2) + 1
