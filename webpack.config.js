@@ -1,32 +1,31 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpackDevServerConfig = require("./webpack.devserver.js");
 
 module.exports = {
-  devtool: 'inline-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    path.join(__dirname, 'example/app.js')
-  ],
+  devServer: webpackDevServerConfig,
+  devtool: "source-map",
+  entry: "./src/Example.js",
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/dist/'
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  resolve: {
-    alias: {
-      'src': path.resolve('./src')
-    }
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js"
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loaders: 'babel-loader',
-        exclude: /node_mudles/
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
       }
     ]
-  }
-}
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      // Path to HTML file
+      template: "./public/index.html"
+    })
+  ]
+};
