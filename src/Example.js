@@ -9,8 +9,8 @@ import { Paginate, PaginateHasResults, PaginateResults, PaginateNoResults, Pagin
 
 const SomePage = () => {
   // Read URL
-  const page = queryString.parse(window.location.search).page || 1
-  const resultsPerPage = queryString.parse(window.location.search).resultsPerPage || 3
+  const page = parseInt(queryString.parse(window.location.search).page || 1)
+  const resultsPerPage = parseInt(queryString.parse(window.location.search).resultsPerPage || 3)
 
   // API Response
   const [response, setResponse] = useState({})

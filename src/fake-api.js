@@ -13,9 +13,13 @@ const fakeApi = (page, resultsPerPage) => {
   const start = page * resultsPerPage - resultsPerPage
   const end = page * resultsPerPage
 
-  return Promise.resolve({
-    totalResults: database.length,
-    results: database.slice(start, end),
+  return new Promise(res => {
+    setTimeout(() => {
+      res({
+        totalResults: database.length,
+        results: database.slice(start, end),
+      })
+    }, 2000)
   })
 }
 

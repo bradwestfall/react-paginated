@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Context from './Context'
 
 const PaginateNav = ({ children, fragment, range, ...rest }) => {
-  const { renderResults, totalResults, results, page, resultsPerPage } = useContext(Context)
-  if (!renderResults) return null
+  const { hasResults, totalResults, page, resultsPerPage } = useContext(Context)
+  if (!hasResults) return null
 
   const totalPages = Math.ceil(totalResults / resultsPerPage)
   if (totalPages === 1) return null

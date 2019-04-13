@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import Context from './Context'
 
 const PaginateHasResults = ({ children, fragment, ...rest }) => {
-  const { renderResults } = useContext(Context)
-  if (!renderResults) return null
+  const { hasResults } = useContext(Context)
+  if (!hasResults) return null
   return fragment ? children : <div {...rest}>{children}</div>
 }
 
